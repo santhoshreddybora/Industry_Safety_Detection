@@ -31,3 +31,10 @@ MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 MODEL_TRAINER_PRETRAINED_WEIGHTED_URL:str="https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt"
 MODEL_TRAINER_NO_EPOCHS: int = 1
 MODEL_TRAINER_BATCH_SIZE: int = 8
+
+"""
+Model Pusher related constant end with MODEL_Pusher VAR NAME
+"""
+MODEL_BUCKET_NAME = "isd-yolov7-2024"
+S3_MODEL_NAME = "best.pt"
+

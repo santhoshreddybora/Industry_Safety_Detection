@@ -5,14 +5,17 @@ from Industry_Safety_Detection.configuration.s3_operations import S3Operation
 from Industry_Safety_Detection.components.data_ingestion import DataIngestion
 from Industry_Safety_Detection.components.data_validation import DataValidation
 from Industry_Safety_Detection.components.model_trainer import ModelTrainer
+from Industry_Safety_Detection.components.model_pusher import ModelPusher
 from Industry_Safety_Detection.entity.config_entity import (DataIngestionConfig,
                                                             DataValidationConfig,
-                                                            ModelTrainerConfig)
+                                                            ModelTrainerConfig,
+                                                            ModelPusherConfig)
 
 
 from Industry_Safety_Detection.entity.artifacts_entity import (DataIngestionArtifact,
                                                                DatavalidationArtifact,
-                                                               ModelTrainerArtifact)
+                                                               ModelTrainerArtifact,
+                                                               ModelpusherArtifact)
 
 
 class TrainPipeline:
@@ -20,6 +23,7 @@ class TrainPipeline:
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config=DataValidationConfig()
         self.model_trainer_config=ModelTrainerConfig()
+        self.model_pusher_config=ModelPusherConfig()
         self.s3_operations = S3Operation()
 
 
@@ -68,6 +72,19 @@ class TrainPipeline:
         except Exception as e:
             logging.info(e)
             raise isdException(e, sys)
+    def start_model_pusher(self,model_trainer_artifact:ModelTrainerArtifact,s3:S3Operation)->ModelpusherArtifact:
+        try:
+            logging.info("Enter the start_model_pusher method of trainPipeline class")
+            model_pusher=ModelPusher(model_pusher_config=self.model_pusher_config,
+                                     model_trainer_artifact=model_trainer_artifact,
+                                     s3=s3
+                                     )
+            model_pusher_artifact=model_pusher.initiate_model_pusher()
+            logging.info("Exit the start_model_pusher method of trainPipeline class")
+            return model_pusher_artifact
+        except Exception as e:
+            logging.info(e)
+            raise isdException(e, sys)
 
     def run_pipeline(self) -> None:
         try:
@@ -75,6 +92,8 @@ class TrainPipeline:
             data_validation_artifact=self.start_data_validation(data_ingestion_artifact)
             if data_validation_artifact.validation_status==True:     
                 model_trainer_artifact=self.start_model_trainer()
+                model_pusher_artifact=self.start_model_pusher(model_trainer_artifact=model_trainer_artifact,
+                                                              s3=self.s3_operations)
             else:
                 raise Exception("Your data is not in correct format")
 
