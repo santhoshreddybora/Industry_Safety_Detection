@@ -42,19 +42,19 @@ class ModelTrainer:
             #download coco starting checkpoint
             url=self.model_trainer_config.weight_name
             file_name=os.path.basename(url)
-            urllib.request.urlretrieve(url,os.path.join("yolov7",file_name))
+            urllib.request.urlretrieve(url,os.path.join("yolov7-1",file_name))
 
             #training
             logging.info("started training")
-            os.system(f"cd yolov7 & python train.py --batch {self.model_trainer_config.batch_size} --cfg cfg/training/custom_yolov7.yaml --epochs {self.model_trainer_config.no_epochs} --data data/custom.yaml --weights 'yolov7.pt'")
+            os.system(f"cd yolov7-1 & python train.py --batch {self.model_trainer_config.batch_size} --cfg cfg/training/custom_yolov7.yaml --epochs {self.model_trainer_config.no_epochs} --data data/custom.yaml --weights 'yolov7.pt'")
             logging.info("finished training")
-            os.system(f"cp yolov7/runs/train/exp/weights/best.pt yolov7/")
-            logging.info("copy best.pt to yolov7 folder")
+            os.system(f"cp yolov7-1/runs/train/exp/weights/best.pt yolov7-1/")
+            logging.info("copy best.pt to yolov7-1 folder")
             os.makedirs(self.model_trainer_config.model_trainer_dir, exist_ok=True)
             logging.info("created a directory for storing best.pt")
-            os.system(f"cp yolov7/runs/train/exp/weights/best.pt {self.model_trainer_config.model_trainer_dir}/")
+            os.system(f"cp yolov7-1/runs/train/exp/weights/best.pt {self.model_trainer_config.model_trainer_dir}/")
             logging.info("copied best.pt to created folder")
-            os.system("rm -rf yolov7/runs")
+            os.system("rm -rf yolov7-1/runs")
             os.system("rm -rf images")
             os.system("rm -rf labels")
             os.system("rm -rf classes.names")
@@ -63,7 +63,7 @@ class ModelTrainer:
             os.system("rm -rf train.cache")
             os.system("rm -rf val.cache")
             model_trainer_artifact = ModelTrainerArtifact(
-                trained_model_file_path="yolov7/best.pt",
+                trained_model_file_path="yolov7-1/best.pt",
             )
 
             logging.info("Exited initiate_model_trainer method of ModelTrainer class")
