@@ -11,3 +11,23 @@ DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"
 DATA_INGESTION_S3_DATA_NAME: str = "isd_data_mini.zip"
 
 DATA_BUCKET_NAME = "isd-yolov7-2024"
+
+"""
+Data validation related constant end with DATA_VALIDATION VAR NAME
+"""
+
+DATA_VALIDATION_DIR_NAME: str = "data_validation"
+
+DATA_VALIDATION_STATUS_FILE = "status.txt"
+
+DATA_VALIDATION_ALL_REQUIRED_FILES=['images','labels','classes.names','train.txt','val.txt']
+
+
+"""
+Model Trainer related constant end with MODEL_TRAINER VAR NAME
+"""
+
+MODEL_TRAINER_DIR_NAME: str = "model_trainer"
+MODEL_TRAINER_PRETRAINED_WEIGHTED_URL:str="https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt"
+MODEL_TRAINER_NO_EPOCHS: int = 1
+MODEL_TRAINER_BATCH_SIZE: int = 8
