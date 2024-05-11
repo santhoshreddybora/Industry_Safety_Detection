@@ -10,7 +10,7 @@ DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"
 
 DATA_INGESTION_S3_DATA_NAME: str = "isd_data_mini.zip"
 
-DATA_BUCKET_NAME = "isd-yolov7-2024"
+DATA_BUCKET_NAME = "isd-yolov7-24"
 
 """
 Data validation related constant end with DATA_VALIDATION VAR NAME
@@ -35,6 +35,6 @@ MODEL_TRAINER_BATCH_SIZE: int = 8
 """
 Model Pusher related constant end with MODEL_Pusher VAR NAME
 """
-MODEL_BUCKET_NAME = "isd-yolov7-2024"
+MODEL_BUCKET_NAME = "isd-yolov7-24"
 S3_MODEL_NAME = "best.pt"
 
